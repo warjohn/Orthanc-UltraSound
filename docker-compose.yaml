@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  orthanc:
+    image: orthancteam/orthanc
+    container_name: orthanc-server
+    ports:
+      - "8042:8042"  # Веб-интерфейс Orthanc
+      - "4242:4242"  # DICOM TCP/IP порт
+    volumes:
+      - ./config/config.json:/etc/orthanc/orthanc.json
+    depends_on:
+      - orthanc-postgres
+
+  orthanc-postgres: 
+    image: postgres:latest
+    container_name: orthanc-postgres
+    environment:
+      - POSTGRES_USER=orthanc
+      - POSTGRES_PASSWORD=orthanc
+      - POSTGRES_DB=orthanc
+    ports:
+      - "5432:5432"  # PostgreSQL порт
+
+
+  pgadmin:    
+    image: dpage/pgadmin4
+    container_name: pgadmin    
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com      
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:      
+      - "5050:80"  # Веб-интерфейс pgAdmin
+    depends_on:      
+      - orthanc-postgres
