@@ -18,13 +18,18 @@
         "HousekeepingInterval": 1,
         "AllowInconsistentChildCounts": false
     },
-    "Plugins" : [
+    "Plugins": [
         "/usr/share/orthanc/plugins/libOrthancPostgreSQLIndex.so",
         "/usr/share/orthanc/plugins/libOrthancPostgreSQLStorage.so",
-        "/usr/share/orthanc/plugins/libOrthancExplorer2.so"
+        "/usr/share/orthanc/plugins/libOrthancExplorer2.so",
+        "/usr/share/orthanc/plugins/libOrthancPython.so"
     ],
     "OrthancExplorer2" : {    
         "Enable" : true,
         "IsDefaultOrthancUI" : true  
-    }
+    },
+    "PythonScript" : "/etc/orthanc/main.py"
   }
+
+  
+  

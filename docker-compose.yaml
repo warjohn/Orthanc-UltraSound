@@ -2,13 +2,20 @@ version: '3.8'
 
 services:
   orthanc:
-    image: orthancteam/orthanc
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    build: 
+      context: .
+      dockerfile: dockerfile
     container_name: orthanc-server
     ports:
       - "8042:8042"  # Веб-интерфейс Orthanc
       - "4242:4242"  # DICOM TCP/IP порт
     volumes:
       - ./config/config.json:/etc/orthanc/orthanc.json
+      - ./src/Pipeline/main.py:/etc/orthanc/main.py
     depends_on:
       - orthanc-postgres
 
